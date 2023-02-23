@@ -1,0 +1,133 @@
+@import "./variables";
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.johari {
+  margin: auto;
+  width: 100%;
+  padding: 2rem;
+  background-color: #ecf0f3;
+
+  .johari-container {
+    background-color: #ecf0f3;
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr;
+
+    .item {
+      text-align: center;
+      align-self: center;
+      min-height: 2rem;
+      padding: 1rem;
+
+      &:nth-of-type(1) {
+        grid-column: 2/3;
+      }
+    }
+
+    .box {
+      height: 15rem;
+      padding: 1rem;
+      border: 1px solid $black;
+
+      &-open {
+        background-color: $primary-color;
+      }
+      &-blind {
+        background-color: $yellow-color;
+      }
+      &-hidden {
+        background-color: $secondary-color;
+        color: $white;
+      }
+      &-unknown {
+        background-color: #333;
+        color: white;
+      }
+      h4 {
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid $black;
+      }
+      .word-container {
+        padding-top: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        grid-gap: 0.5rem;
+      }
+    }
+  }
+}
+
+.footer {
+  position: unset;
+}
+
+@media (max-width: 1250px) {
+  .body-container {
+    padding: 1rem;
+  }
+}
+@media (max-width: 997px) {
+  .body-container {
+    .schedule-form {
+      .trait-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+}
+@media (max-width: 821px) {
+  .body-container {
+    .schedule-form {
+      .trait-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 561px) {
+  .johari {
+    padding: 0;
+  }
+}
+
+@media (max-width: 484px) {
+  .btn-submit {
+    height: unset;
+  }
+  .body-container {
+    .heading {
+      margin: 1rem auto;
+      font-size: 1.2rem;
+    }
+    .schedule-form {
+      .trait-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  }
+
+  .johari {
+    .johari-container {
+      display: flex;
+      flex-direction: column;
+      h3 {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 356px) {
+  .btn-submit,
+  .btn-cancel {
+    width: 100%;
+  }
+}
