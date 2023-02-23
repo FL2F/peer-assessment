@@ -6,7 +6,7 @@ const connection = connectDB();
 //Route: POST /api/tests
 const createTest = (req, res) => {
   // Build the INSERT query
-  const insertQuery = `INSERT INTO traits.tests (test_id, subject_id, inputer_id, username, group_id, title) VALUES (?,?,?,?,?,?)`;
+  const insertQuery = `REPLACE INTO traits.tests (test_id, subject_id, inputer_id, username, group_id, title) VALUES (?,?,?,?,?,?)`;
   const values = [
     req.body.test_id,
     req.body.subject_id,

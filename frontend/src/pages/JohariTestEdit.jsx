@@ -88,12 +88,14 @@ const JohariTestEdit = () => {
       setSelectedTraits(adjectives);
     }
 
-    allMembers.find((member) => {
-      if (String(member.id) === currentTest.subject_id) {
-        setCurrentMember(member);
-      }
-      return currentMember;
-    });
+    if (currentTest) {
+      allMembers.find((member) => {
+        if (String(member.id) === currentTest.subject_id) {
+          setCurrentMember(member);
+        }
+        return currentMember;
+      });
+    }
   }, [currentTestTraits, currentTest, dispatch]);
 
   const inputer_id = currentTest ? currentTest.inputer_id : "";
