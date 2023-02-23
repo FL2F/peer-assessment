@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import {
+  getAll,
   getAllMembersForGroup,
   getMembers,
 } from "../features/members/memberSlice";
@@ -27,19 +28,19 @@ const JohariTestEdit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // states
-  const [selectedTraits, setSelectedTraits] = useState([]);
-  const [currentTest, setCurrentTest] = useState(null);
-
   const { id } = useParams();
   const { user, isLoading, isError, message } = useSelector(
     (state) => state.auth
   );
   const { testsArr } = useSelector((state) => state.tests);
   const { currentTestTraits } = useSelector((state) => state.traits);
-  const { membersArr } = useSelector((state) => state.members);
+  const { allMembers, membersArr } = useSelector((state) => state.members);
 
+  // states
+  const [selectedTraits, setSelectedTraits] = useState([]);
+  const [currentTest, setCurrentTest] = useState(null);
   const [groupId, setGroupId] = useState("");
+  const [currentMember, setCurrentMember] = useState("");
 
   useEffect(() => {
     if (!user) {
@@ -61,10 +62,14 @@ const JohariTestEdit = () => {
     if (testsArr.length === 0) {
       dispatch(getAllTests());
     }
-    if (user.role === "admin") {
+    if (user.role === "admin" || user.role === "facilitator") {
       setGroupId(membersArr[0].group_id);
     } else {
       setGroupId(user.group_id);
+    }
+
+    if (allMembers.length === 0) {
+      dispatch(getAll());
     }
 
     const test = testsArr.filter((test) => test.test_id === id);
@@ -82,6 +87,13 @@ const JohariTestEdit = () => {
       }));
       setSelectedTraits(adjectives);
     }
+
+    allMembers.find((member) => {
+      if (String(member.id) === currentTest.subject_id) {
+        setCurrentMember(member);
+      }
+      return currentMember;
+    });
   }, [currentTestTraits, currentTest, dispatch]);
 
   const inputer_id = currentTest ? currentTest.inputer_id : "";
@@ -181,7 +193,12 @@ const JohariTestEdit = () => {
   return (
     <section className="schedule-form">
       <div className="heading">
-        {/* <h2>Peer Assessment For {currentTest.username}</h2> */}
+        <h2>
+          Edit Peer Assessment For{" "}
+          {currentMember.title || currentMember.username}
+        </h2>
+
+        <p>Please input 5 traits</p>
       </div>
 
       <div className="trait-container">

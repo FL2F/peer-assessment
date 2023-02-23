@@ -71,10 +71,13 @@ const JohariTest = () => {
       return currentMember;
     });
 
-    if (user.role === "admin" && id === String(user.id)) {
+    if (
+      (user.role === "admin" || user.role === "facilitator") &&
+      id === String(user.id)
+    ) {
       setCurrentMember(user);
     }
-    if (user.role === "admin") {
+    if (user.role === "admin" || user.role === "facilitator") {
       setGroupId(membersArr[0].group_id);
     } else {
       setGroupId(user.group_id);
@@ -100,7 +103,7 @@ const JohariTest = () => {
       selectedTraits,
     ].every((el) => el.length >= 1);
     if (selectedTraits.length < 4)
-      return toast.error("Minimum of 4 traits must be selected");
+      return toast.error("4-5 traits must be selected");
     if (selectedTraits.length > 5)
       return toast.error("Maximum 5 traits must be selected");
     if (canSave) {
@@ -193,7 +196,7 @@ const JohariTest = () => {
           Peer Assessment For {currentMember.title || currentMember.username}
         </h2>
 
-        <p>Please input up to 5 traits</p>
+        <p>Please input 5 traits</p>
       </div>
 
       <div className="trait-container">
