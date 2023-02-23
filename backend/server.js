@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: [
+      "https://heartfelt-sprite-eb1bbc.netlify.app",
       "http://localhost:3000",
       "https://peer-assessment-frontend-3yvuhaorjq-uc.a.run.app",
       "https://peer-assessment.fl2f.ca",
