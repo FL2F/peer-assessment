@@ -13,17 +13,18 @@ app.use(express.json());
 // urlencoded middleware
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  cors({
-    origin: [
-      "https://heartfelt-sprite-eb1bbc.netlify.app",
-      "http://localhost:3000",
-      "https://peer-assessment-frontend-3yvuhaorjq-uc.a.run.app",
-      "https://peer-assessment.fl2f.ca",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: [
+//       "https://heartfelt-sprite-eb1bbc.netlify.app",
+//       "http://localhost:3000",
+//       "https://peer-assessment-frontend-3yvuhaorjq-uc.a.run.app",
+//       "https://peer-assessment.fl2f.ca",
+//     ],
+//     credentials: true,
+//   })
+// );
 
 app.use("/api/login", require("./routes/userRoutes")); //working
 app.use("/api/logout", require("./routes/logoutRoutes")); //working
