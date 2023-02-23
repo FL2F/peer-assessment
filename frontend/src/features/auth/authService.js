@@ -4,8 +4,8 @@ import { resetGroups } from "../groups/groupSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:8080/api/";
-// const API_URL = "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/";
+// const API_URL = "http://localhost:8080/api/";
+const API_URL = "https://peer-assessment-backend.onrender.com/api/";
 
 // axios.defaults.withCredentials = true;
 

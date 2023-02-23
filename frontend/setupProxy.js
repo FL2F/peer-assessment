@@ -5,7 +5,7 @@ module.exports = function (app) {
     "/api",
     createProxyMiddleware({
       // target: "http://localhost:8080",
-      target: "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app",
+      target: "https://peer-assessment-backend.onrender.com",
       changeOrigin: true,
     })
   );
