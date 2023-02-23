@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// const API_URL = "http://localhost:8080/api/members/";
-const API_URL =
-  "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/members/";
+const API_URL = "http://localhost:8080/api/members/";
+// const API_URL =
+//   "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/members/";
 
 // GET all Members for user's group
 const getAllMembersForGroup = async (token) => {

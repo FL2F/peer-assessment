@@ -99,7 +99,17 @@ const JohariTest = () => {
       username,
       selectedTraits,
     ].every((el) => el.length >= 1);
+    if (selectedTraits.length < 4)
+      return toast.error("Minimum of 4 traits must be selected");
+    if (selectedTraits.length > 5)
+      return toast.error("Maximum 5 traits must be selected");
     if (canSave) {
+      // console.log("test_id", test_id);
+      // console.log("subject_id", subject_id);
+      // console.log("inputer_id", inputer_id);
+      // console.log("group_id", group_id);
+      // console.log("usernsme", username);
+      // console.log("selectedTraits", selectedTraits);
       try {
         dispatch(
           createTest({

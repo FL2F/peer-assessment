@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// const API_URL = "http://localhost:8080/api/tests/";
-const API_URL =
-  "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/tests/";
+const API_URL = "http://localhost:8080/api/tests/";
+// const API_URL =
+//   "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/tests/";
 
 // GET all Tests That the user has completed
 const getAllTests = async (token) => {

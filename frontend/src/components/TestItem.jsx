@@ -6,8 +6,6 @@ const TestItem = ({ test }) => {
   const onClick = () => {
     navigate(`/johari-test/${test.test_id}/edit`);
   };
-
-  console.log("test", test);
   return (
     <div>
       <div className="calendar-body test-item" onClick={onClick}>

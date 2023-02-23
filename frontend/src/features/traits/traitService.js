@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// const API_URL = "http://localhost:8080/api/traits/";
-const API_URL =
-  "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/traits/";
+const API_URL = "http://localhost:8080/api/traits/";
+// const API_URL =
+//   "https://peer-assessment-backend-3yvuhaorjq-uc.a.run.app/api/traits/";
 
 const createTraits = async (traitsData, token) => {
   const config = {
