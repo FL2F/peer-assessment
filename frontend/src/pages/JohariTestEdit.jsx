@@ -133,39 +133,55 @@ const JohariTestEdit = () => {
     ].every((el) => el.length >= 1);
     if (canSave) {
       try {
-        dispatch(
-          deleteTraitsForTest({
-            test_id: id,
-          })
-        );
-        selectedTraits.forEach((adjective) => {
-          const newTraitID = uuidv4();
-
+        new Promise((resolve, reject) => {
           dispatch(
-            createTraits({
-              trait_id: adjective.trait_id ? adjective.trait_id : newTraitID,
-              subject_id,
-              inputer_id,
-              adjective: adjective.adjective,
+            deleteTraitsForTest({
               test_id: id,
-              group_id,
             })
-          );
+          )
+            .then(() => {
+              selectedTraits.forEach((adjective) => {
+                const newTraitID = uuidv4();
+
+                dispatch(
+                  createTraits({
+                    trait_id: adjective.trait_id
+                      ? adjective.trait_id
+                      : newTraitID,
+                    subject_id,
+                    inputer_id,
+                    adjective: adjective.adjective,
+                    test_id: id,
+                    group_id,
+                  })
+                );
+              });
+              toast.success("Peer Assessment Complete");
+              setSelectedTraits([]);
+              dispatch(resetTraits());
+              if (user.role !== "admin") {
+                dispatch(getAllTraitsFromGroup());
+                dispatch(getSelfTraits());
+                dispatch(getAllMembersForGroup());
+                navigate("/");
+              } else {
+                dispatch(getAdminSelf(group_id));
+                dispatch(getAdminTraitsFromGroup(group_id));
+                dispatch(getMembers(group_id));
+                navigate(`/${group_id}`);
+              }
+              resolve();
+            })
+            .catch((error) => {
+              const message =
+                error.response.data.message ||
+                error.message ||
+                error.toString();
+              toast.error(message);
+              console.log(message);
+              reject(error);
+            });
         });
-        toast.success("Peer Assessment Complete");
-        setSelectedTraits([]);
-        dispatch(resetTraits());
-        if (user.role !== "admin") {
-          dispatch(getAllTraitsFromGroup());
-          dispatch(getSelfTraits());
-          dispatch(getAllMembersForGroup());
-          navigate("/");
-        } else {
-          dispatch(getAdminSelf(group_id));
-          dispatch(getAdminTraitsFromGroup(group_id));
-          dispatch(getMembers(group_id));
-          navigate(`/${group_id}`);
-        }
       } catch (error) {
         const message =
           error.response.data.message || error.message || error.toString();

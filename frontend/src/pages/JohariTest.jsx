@@ -114,56 +114,70 @@ const JohariTest = () => {
       // console.log("usernsme", username);
       // console.log("selectedTraits", selectedTraits);
       try {
-        dispatch(
-          createTest({
-            test_id,
-            subject_id,
-            inputer_id,
-            username,
-            group_id,
-            title,
-          })
-        );
-        selectedTraits.forEach((adjective) => {
-          const trait_id = uuidv4();
-          if (subject_id === inputer_id) {
-            dispatch(
-              createTraits({
-                trait_id,
-                subject_id,
-                inputer_id,
-                adjective,
-                test_id,
-                group_id,
-              })
-            );
-          } else {
-            dispatch(
-              createTraitsForOthers({
-                trait_id,
-                subject_id,
-                inputer_id,
-                adjective,
-                test_id,
-                group_id,
-              })
-            );
-          }
+        new Promise((resolve, reject) => {
+          dispatch(
+            createTest({
+              test_id,
+              subject_id,
+              inputer_id,
+              username,
+              group_id,
+              title,
+            })
+          )
+            .then(() => {
+              selectedTraits.forEach((adjective) => {
+                const trait_id = uuidv4();
+                if (subject_id === inputer_id) {
+                  dispatch(
+                    createTraits({
+                      trait_id,
+                      subject_id,
+                      inputer_id,
+                      adjective,
+                      test_id,
+                      group_id,
+                    })
+                  );
+                } else {
+                  dispatch(
+                    createTraitsForOthers({
+                      trait_id,
+                      subject_id,
+                      inputer_id,
+                      adjective,
+                      test_id,
+                      group_id,
+                    })
+                  );
+                }
+              });
+              toast.success("Peer Assessment Complete");
+              setTestID(uuidv4());
+              setSelectedTraits([]);
+              dispatch(getAllTraitsFromGroup());
+              if (user.role !== "admin") {
+                dispatch(getSelfTraits());
+                dispatch(getAllMembersForGroup());
+                navigate("/");
+              } else {
+                dispatch(getAdminSelf(group_id));
+                dispatch(getAdminTraitsFromGroup(group_id));
+                dispatch(getMembers(group_id));
+                navigate(`/${group_id}`);
+              }
+              resolve();
+            })
+            .catch((error) => {
+              const message =
+                error.response.data.message ||
+                error.message ||
+                error.toString();
+              toast.error(message);
+              console.log(message);
+              reject(error);
+            });
         });
-        toast.success("Peer Assessment Complete");
-        setTestID(uuidv4());
-        setSelectedTraits([]);
-        dispatch(getAllTraitsFromGroup());
-        if (user.role !== "admin") {
-          dispatch(getSelfTraits());
-          dispatch(getAllMembersForGroup());
-          navigate("/");
-        } else {
-          dispatch(getAdminSelf(group_id));
-          dispatch(getAdminTraitsFromGroup(group_id));
-          dispatch(getMembers(group_id));
-          navigate(`/${group_id}`);
-        }
       } catch (error) {
         const message =
           error.response.data.message || error.message || error.toString();
